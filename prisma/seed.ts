@@ -13,11 +13,11 @@ const prisma = new PrismaClient({
 const bikes = [
   {
     id: 'gravel',
-    model: 'Canyon Grizl 7',
+    model: 'Canyon Endurace CF SL 7',
     type: BikeType.GRAVEL,
     pricePerHour: 900,
     pricePerDay: 4500,
-    imageUrl: '/Images/Bikes/Canyon.webp',
+    imageUrl: '/Images/Bikes/canyon-nomad.webp',
     description:
       'A fast, forgiving gravel bike for mixed surfaces — wide tyres, relaxed geometry and mounts for everything you need on a long day out.',
   },
