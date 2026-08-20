@@ -8,6 +8,9 @@ import { prisma } from 'Lib/prisma';
 /** Revalidation tag for everything the catalogue reads. */
 export const BIKES_TAG = 'bikes';
 
+/** Pinned to the first slot of the catalogue grid, ahead of the price sort. */
+const FEATURED_BIKE_ID = 'gravel';
+
 /** Ceiling on how stale the catalogue may get without a booking to flush it. */
 const REVALIDATE_SECONDS = 300;
 
@@ -87,7 +90,10 @@ export const getCatalogueBikes = unstable_cache(
       orderBy: [{ status: 'asc' }, { pricePerHour: 'asc' }],
     });
 
-    return bikes.map(toCatalogueBike);
+    // `sort` is stable, so every other bike keeps the status/price order above.
+    return bikes
+      .map(toCatalogueBike)
+      .sort((a, b) => Number(b.id === FEATURED_BIKE_ID) - Number(a.id === FEATURED_BIKE_ID));
   },
   ['catalogue-bikes'],
   { tags: [BIKES_TAG], revalidate: REVALIDATE_SECONDS },
